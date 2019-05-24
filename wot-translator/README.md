@@ -24,9 +24,10 @@ To compile the plugin and obtain a *jar* file to be used by Helio just run the f
 mvn clean package -DskipTests
 ````
 
+
 ## Writing a mapping
 
-### Scenario I: one sensor that is related to one endpoint 
+### Scenario I: photometer sensor
 
 Let's imagine we have a photometer. First we are going to generate a description using the [VICINITY ontology](http://vicinity.iot.linkeddata.es/vicinity/) :
 
@@ -80,10 +81,14 @@ prefix map: <http://iot.linkeddata.es/def/wot-mappings#>
 #### Step 1: define where the endpoint is, i.e., a wot:Link instance. 
 ####  * For this case the are going to use <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44>
 
+<http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> a <http://iot.linkeddata.es/def/wot#Link>;
+  <http://iot.linkeddata.es/def/wot#href> "http://api.stars4all.eu/photometers/stars2";
+  <http://iot.linkeddata.es/def/wot#mediaType> "application/json" .
+  
 #### Step 2: select the Resources to which we want to append the RDF fetched from the endpoints.
 ####   We specify where the new RDF will be included by relating such Resource to a core:ThingDescription
 ####  *  In this case we want to:
-####        A) Include in our s4city:City resource  the city extracted from the endpoint				
+####        A) Include in our s4city:City resource  the city extracted from the endpoint        
 ####        B) Include in our core:Value the value and timestamp provided by the sensors in the endpoint
 
 #### 2.A 
@@ -92,33 +97,108 @@ prefix map: <http://iot.linkeddata.es/def/wot-mappings#>
   <http://iot.linkeddata.es/def/core#describes> <http://iot.linkeddata.eu/City/AS123-123-asd>;
   <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/city> .
 
-  <http://iot.linkeddata.es/accessmappings/city> <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/10>  <http://iot.linkeddata.es/mappings/11>  <http://iot.linkeddata.es/mappings/12>;
+  <http://iot.linkeddata.es/accessmappings/city> <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/10>,  <http://iot.linkeddata.es/mappings/11>,  <http://iot.linkeddata.es/mappings/12>;
   <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> .
 
  <http://iot.linkeddata.es/mappings/10> a <http://iot.linkeddata.es/def/wot-mappings#ObjectProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+    <http://iot.linkeddata.es/def/wot-mappings#targetClass> "http://schema.org/City".
+ <http://iot.linkeddata.es/mappings/11> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/name";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.city".
+ <http://iot.linkeddata.es/mappings/12> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/location";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.location".
+    
+#### 2.B
+<http://iot.linkeddata.eu/object/Ax0002/value> core:isDescribedBy <http://iot.linkeddata.es/TD/Values>.
+<http://iot.linkeddata.es/TD/Values> rdf:type core:ThingDescription;
+  <http://iot.linkeddata.es/def/core#describes> <http://iot.linkeddata.eu/object/Ax0002/value>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/values> .
+
+  <http://iot.linkeddata.es/accessmappings/values> <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/20>,  <http://iot.linkeddata.es/mappings/21>;
+  <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> .
+
+ <http://iot.linkeddata.es/mappings/20> rdf:type <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#literalValue";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.zero_point".
+ <http://iot.linkeddata.es/mappings/21> rdf:type <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#timezone";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.local_timezone".
+``````
+
+Having the previous RDF, we can setup Helio to publish as static RDF the former data (the sensor description) and provide the mapping, as a result, Helio will publish a enhanced version of the description with the values injected from the endpoint provided
+
+### Scenario II: Creating several RDF resources from one endpoint
+
+In this example we move out from IoT and landed in another domain, academic award. The following example shows how to generate RDF about a person, a city, and an award extracting the data all from one endpoint.
+
+````
+# 1. define a link 
+
+<http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> a <http://iot.linkeddata.es/def/wot#Link>;
+  <http://iot.linkeddata.es/def/wot#href> "https://api.nsf.gov/services/v1/awards/1157954.json";
+  <http://iot.linkeddata.es/def/wot#mediaType> "application/json" .
+
+# 2. define the mappings to generate Resources
+
+ <http://iot.linkeddata.es/mappings/1> a <http://iot.linkeddata.es/def/wot-mappings#ObjectProperty> ;
   	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
   	<http://iot.linkeddata.es/def/wot-mappings#targetClass> "http://schema.org/City".
  <http://iot.linkeddata.es/mappings/11> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
   	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/name";
-  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.city".
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].awardeeCity".
  <http://iot.linkeddata.es/mappings/12> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
-  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/location";
-  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.location".
-  	
-#### 2.B
-<http://iot.linkeddata.eu/object/Ax0002/value> core:isDescribedBy <http://iot.linkeddata.es/TD/Values>.
-<http://iot.linkeddata.es/TD/Values> a core:ThingDescription;
-  <http://iot.linkeddata.es/def/core#describes> <http://iot.linkeddata.eu/object/Ax0002/value>;
-  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/values> .
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/state";
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].awardeeStateCode".
 
-  <http://iot.linkeddata.es/accessmappings/values> <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/20>  <http://iot.linkeddata.es/mappings/21>;
+
+  <http://iot.linkeddata.es/mappings/2> a <http://iot.linkeddata.es/def/wot-mappings#ObjectProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+  	<http://iot.linkeddata.es/def/wot-mappings#targetClass> "http://schema.org/Person".
+ <http://iot.linkeddata.es/mappings/21> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/first-name";
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].piFirstName".
+ <http://iot.linkeddata.es/mappings/22> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/last-name";
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].piLastName".
+
+
+<http://iot.linkeddata.es/mappings/3> a <http://iot.linkeddata.es/def/wot-mappings#ObjectProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+  	<http://iot.linkeddata.es/def/wot-mappings#targetClass> "http://schema.org/Award".
+ <http://iot.linkeddata.es/mappings/31> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/date";
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].date".
+ <http://iot.linkeddata.es/mappings/32> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://schema.org/name";
+  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.response.award.[0].title".
+
+ # Relate mappings with endpoints 	
+
+<http://iot.linkeddata.es/accessmappings/city> a <http://iot.linkeddata.es/def/wot-mappings#AccessMapping>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/1>, <http://iot.linkeddata.es/mappings/11>, <http://iot.linkeddata.es/mappings/12> ;
   <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> .
 
- <http://iot.linkeddata.es/mappings/20> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
-  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#literalValue";
-  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.zero_point".
- <http://iot.linkeddata.es/mappings/21> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
-  	<http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#timezone";
-  	<http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.local_timezone".
-  	
-``````
+<http://iot.linkeddata.es/accessmappings/person> a <http://iot.linkeddata.es/def/wot-mappings#AccessMapping>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/2>, <http://iot.linkeddata.es/mappings/21>, <http://iot.linkeddata.es/mappings/22> ;
+  <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> .
+
+<http://iot.linkeddata.es/accessmappings/award> a <http://iot.linkeddata.es/def/wot-mappings#AccessMapping>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://iot.linkeddata.es/mappings/3>, <http://iot.linkeddata.es/mappings/31>, <http://iot.linkeddata.es/mappings/32> ;
+  <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://iot.linkeddata.es/link/85288bed-95fb-4d4d-8fe7-1cf9df3f0d44> .
+
+# Relate things with ThingDescriptions
+
+<http://iot.linkeddata.es/TD/City> a <http://iot.linkeddata.es/def/core#ThingDescription>;
+  <http://iot.linkeddata.es/def/core#describes> <https://api.nsf.gov/services/v1/awards/1157954/city>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/city> .
+
+<http://iot.linkeddata.es/TD/Person> a <http://iot.linkeddata.es/def/core#ThingDescription>;
+  <http://iot.linkeddata.es/def/core#describes> <https://api.nsf.gov/services/v1/awards/1157954/person>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/person> .
+
+<http://iot.linkeddata.es/TD/Award> a <http://iot.linkeddata.es/def/core#ThingDescription>;
+  <http://iot.linkeddata.es/def/core#describes> <https://api.nsf.gov/services/v1/awards/1157954/award>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://iot.linkeddata.es/accessmappings/award> .
+````
