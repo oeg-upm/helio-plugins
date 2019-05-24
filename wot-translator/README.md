@@ -9,10 +9,10 @@ The WoT mapping specifications are meant to be used in the context of IoT servic
 
 To enable Helio to use this plugin follow these steps:
 
- * Create a mapping file using the specification of WoT mapping 
+ * Create a mapping file using the specification of WoT mapping, you may find some example [here](https://github.com/oeg-upm/helio-plugins/tree/master/wot-translator/src/test/resources/mappings) 
  * Place the mapping in the folder from which Helio will read them. 
  * Get the WoT Mapping Translator Plugin *jar* file and place it in the plugins folder of Helio
-	 * You can either compile the project as specified below or take the *jar* from the target folder
+	 * You can either compile the project as specified below or take the *jar* from the [target folder](https://github.com/oeg-upm/helio-plugins/blob/master/wot-translator/target/helio.translators.wot-0.1.1.jar)
 * Run Helio normally
 
 
