@@ -1,7 +1,7 @@
 
 # WoT Mapping Translator Plugin
 
-This piece of software is a plugin for the Helio platform that allows to define mappings using the [Web of Things (WoT) mapping specification](http://iot.linkeddata.es/def/wot-mappings/index-en.html).
+This piece of software is a plugin for the [Helio platform](https://helio.linkeddata.es/) that allows to define mappings using the [Web of Things (WoT) mapping specification](http://iot.linkeddata.es/def/wot-mappings/index-en.html).
 
 The WoT mapping specifications are meant to be used in the context of IoT services that offer data of their sensors. The bottom line is to have on, the one hand, informative descriptions of IoT infrastructures such as the type of devices and sensors within, or the properties that they observed. For this purpose we suggest to use the [WoT ontology](https://www.w3.org/TR/wot-thing-description/) or the [ontology developed by us in the European project VICINITY](http://vicinity.iot.linkeddata.es/vicinity/) **that extends WoT with enhanced capabilities**. On the other hand, once the IoT infrastructures are described, we can specify a mapping that encodes from where the  data related to such infrastructure can be retrieved and how it should be treated in order to generate its RDF version and combine it with the descriptions. As a result, we will obtain an unified view of the description of the IoT infrastructures and their captured data on real-time.
 
