@@ -15,6 +15,7 @@ To enable Helio to use this plugin follow these steps:
 	 * You can either compile the project as specified below or take the *jar* from the [target folder](https://github.com/oeg-upm/helio-plugins/blob/master/wot-translator/target/helio.translators.wot-0.1.1.jar)
 * Run Helio normally
 
+In your mapping folder **you can combine mappings of different formats as far as they are supported by Helio**
 
 ## Compiling the plugin
 
