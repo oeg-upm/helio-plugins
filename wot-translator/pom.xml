@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>oeg.helio.plugins</groupId>
+  <artifactId>helio.translators.wot</artifactId>
+  <version>0.1.1</version>
+  <name>wot-translator</name>
+  <description>A plugin for Helio that adapts the WoT mappings so they can be used by this platform</description>
+  
+    
+   <properties>
+	    <maven.compiler.target>1.8</maven.compiler.target>
+	    	<maven.compiler.source>1.8</maven.compiler.source>    
+	  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>   
+  </properties>
+  
+  <dependencies>
+  		<!-- Helio framework:  -->
+	  	<dependency>
+			<groupId>oeg.helio.framework</groupId>
+		   	<artifactId>helio-framework</artifactId>
+		    <version>0.2.1</version>
+		</dependency>
+		<!-- Helio Core -->
+		<dependency>
+			<groupId>oeg.helio.core</groupId>
+			<artifactId>helio-core</artifactId>
+			<version>0.2.2</version>
+		</dependency>
+		  <!-- JUnit: https://mvnrepository.com/artifact/junit/junit -->
+	    <dependency>
+	    		<groupId>junit</groupId>
+	        <artifactId>junit</artifactId>
+	        <version>4.12</version>
+	        <scope>test</scope>
+	    </dependency>
+  </dependencies> 
+</project>
