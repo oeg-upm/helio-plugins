@@ -8,10 +8,10 @@ This piece of software is a plugin for the [Helio platform](https://helio.linked
 
 To enable Helio to use this plugin follow these steps:
 
-* Create a mapping file using the Helio specification
+* Create a mapping **using the Helio specification**
 * In the mapping specify any of the RML connectors of this plugin
 * Get the RMLConnector jar file and its dependencies folder, then place it in the plugins folder of Helio
-* 	You can either compile the project as specified below or take the *jar* and dependencies folder from the dist folder
+* 	You can either compile the project as specified below or [download the compiled dependency](https://drive.upm.es/index.php/s/gztsJCKd8vQ9m5X)
 * Run Helio normally
 
 ## Connector implementations
@@ -77,5 +77,5 @@ To complile the *jar* of this plugin run the following command:
 `````
 mvn clean install
 `````
-
+A folder called dist will be created containing the compiled *jar* and a folder with dependencies called rml; both must be pasted in the folder contaning the plugins of Helio in order to use this plugin.
 

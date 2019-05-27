@@ -45,7 +45,7 @@
                            <goal>copy-dependencies</goal>
                        </goals>
                        <configuration>
-                           <outputDirectory>${project.parent.basedir}/lib/rml</outputDirectory>
+                           <outputDirectory>dist/rml</outputDirectory>
                            <overWriteReleases>true</overWriteReleases>
                            <overWriteSnapshots>true</overWriteSnapshots>
                            <overWriteIfNewer>true</overWriteIfNewer>
@@ -71,7 +71,7 @@
                            <Revision>${project.version}</Revision>
                        </manifestEntries>
                    </archive>
-                   <outputDirectory>${project.parent.basedir}/lib</outputDirectory>
+                   <outputDirectory>dist</outputDirectory>
                </configuration>
            </plugin>
        </plugins>
