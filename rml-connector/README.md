@@ -1,4 +1,5 @@
 
+
 # RMLConnector
 
 This piece of software is a plugin for the [Helio platform](https://helio.linkeddata.es/) that generates RDF using the native [implementation of RML-Mapper](https://github.com/RMLio/rmlmapper-java), thus, allowing users to rely on RML mappings to generate the RDF and then use other Helio features to enhance or publish the RDF
@@ -11,7 +12,7 @@ To enable Helio to use this plugin follow these steps:
 * Create a mapping **using the Helio specification**
 * In the mapping specify any of the RML connectors of this plugin
 * Get the RMLConnector jar file and its dependencies folder, then place it in the plugins folder of Helio
-* 	You can either compile the project as specified below or [download the compiled dependency](https://drive.upm.es/index.php/s/gztsJCKd8vQ9m5X)
+  *   You can either compile the project as specified below or [download the compiled dependency](https://drive.upm.es/index.php/s/gztsJCKd8vQ9m5X)
 * Run Helio normally
 
 ## Connector implementations
@@ -59,7 +60,7 @@ In the RML connector plugin there are two implementations that allow to use the 
         "arguments" : [],
         "connector"  : {
          "arguments" : ["./mappings/rml-mappings/"],
-         "type" : "RMLConnector",
+         "type" : "RMLDirectoryConnector",
         }
       }
   ],
@@ -71,7 +72,8 @@ In the RML connector plugin there are two implementations that allow to use the 
   ]
 }
 `````
-### Compiling the plugin
+
+### Compiling the plugin
 
 To complile the *jar* of this plugin run the following command:
 `````
