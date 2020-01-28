@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tfg2</groupId>
+  <artifactId>tfg</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>TFG2</name>
+  
+  <properties>
+	    <maven.compiler.target>1.8</maven.compiler.target>
+	    	<maven.compiler.source>1.8</maven.compiler.source>    
+	  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>   
+  </properties>
+  
+  <dependencies>
+	  <!-- Helio framework -->
+	  	<dependency>
+			<groupId>oeg.helio.framework</groupId>
+		   	<artifactId>helio-framework</artifactId>
+		    <version>0.2.3</version>
+		</dependency>
+	<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
+		<dependency>
+		    <groupId>org.eclipse.paho</groupId>
+		    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
+	</dependencies>
+  
+ <build>
+       <finalName>helio.connector.${project.artifactId}-${project.version}</finalName>
+       <plugins>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-dependency-plugin</artifactId>
+               <executions>
+                   <execution>
+                       <id>copy-dependencies</id>
+                       <phase>prepare-package</phase>
+                       <goals>
+                           <goal>copy-dependencies</goal>
+                       </goals>
+                       <configuration>
+                           <outputDirectory>target/plugin/helio.connector.${project.artifactId}-${project.version}</outputDirectory>
+                           <overWriteReleases>true</overWriteReleases>
+                           <overWriteSnapshots>true</overWriteSnapshots>
+                           <overWriteIfNewer>true</overWriteIfNewer>
+                       </configuration>
+                   </execution>
+
+               </executions>
+           </plugin>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-jar-plugin</artifactId>
+               <configuration>
+                   <excludes>
+                       <exclude>*/.properties</exclude>
+                   </excludes>
+                   <archive>
+                       <manifest>
+                           <addClasspath>true</addClasspath>
+                           <classpathPrefix>helio.connector.${project.artifactId}-${project.version}/</classpathPrefix>
+                       </manifest>
+                       <manifestEntries>
+                           <Class-Path>conf/</Class-Path>
+                           <Revision>${project.version}</Revision>
+                       </manifestEntries>
+                   </archive>
+                   <outputDirectory>target/plugin</outputDirectory>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>
+  
+  
+</project>
