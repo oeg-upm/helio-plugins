@@ -1,0 +1,3 @@
+oeg\helio\plugins\helio\connector\ethereum_connector\EthereumInfoExtractor.class
+oeg\helio\plugins\helio\connector\ethereum_connector\EthereumConnector.class
+oeg\helio\plugins\helio\connector\ethereum_connector\Web3jConnector.class
