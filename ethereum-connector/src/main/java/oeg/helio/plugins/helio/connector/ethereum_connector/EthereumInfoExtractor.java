@@ -11,9 +11,17 @@ import org.web3j.protocol.core.methods.response.EthBlock.TransactionResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import oeg.helio.plugins.helio.connector.auxiliar_package.JSONManipulation;
+
 public class EthereumInfoExtractor{
 
-	public Web3jConnector web3jConnector = EthereumConnector.web3j;
+	public Web3jConnector web3jConnector;
+	private JSONManipulation jsonManipulation;
+
+	public EthereumInfoExtractor() {
+		web3jConnector = EthereumConnector.web3j;
+		jsonManipulation = new JSONManipulation();
+	}
 	
 	/**
 	 * 
@@ -63,7 +71,12 @@ public class EthereumInfoExtractor{
 				transactionJson.addProperty("Gas", tr.get().getGas());
 				transactionJson.addProperty("GasPrice", tr.get().getGasPrice());
 				transactionJson.addProperty("Hash", tr.get().getHash());
-				transactionJson.addProperty("Input", tr.get().getInput());						
+				//Check if the user want to decode the input data inside the transaction
+				if(!web3jConnector.isDecoder()) {
+					transactionJson.addProperty("Input", tr.get().getInput());	
+				}else {
+					transactionJson.add("Input", jsonManipulation.HexToString(tr.get().getInput().substring(2)));
+				}
 				transactionJson.addProperty("TransactionIndex", tr.get().getTransactionIndex());	
 				transactionJson.addProperty("Creates", tr.get().getCreates());
 				transactionJson.addProperty("PublicKey", tr.get().getPublicKey());

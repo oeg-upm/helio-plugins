@@ -2,7 +2,6 @@ package oeg.helio.plugins.helio.connector.ethereum_connector;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.List;
 
 import org.web3j.protocol.Web3j;
@@ -21,11 +20,19 @@ public class EthereumConnector implements Connector{
 	 * Constructor. 
 	 * Arg0 -> Direction for a Ethereum node (MainNet or TestNet).
 	 * Arg1 -> Number of first block.
-	 * Arg2 -> Number of second block.
+	 * Arg2 -> Decoder on / off.
 	 * @throws NotReachableEndpointException 
 	 */
 	public EthereumConnector(List<String> arguments){
+		web3j.setDecoder(false);
 		web3j.setConnection(Web3j.build(new HttpService(arguments.get(0))));
+		if(arguments.size() != 3) {
+			System.out.println("Number of arguments must be 3 (URI, Block parameter, Decoder On/Off)");
+			return;
+		}
+		if(arguments.get(2).equalsIgnoreCase("on")) {
+			web3j.setDecoder(true);
+		}
 		if(arguments.get(1).contentEquals("*")) {
 			arguments.set(1, "-1");
 			resultToHelio = GetBlockData(Integer.parseInt((arguments.get(1))),null);	
@@ -69,4 +76,12 @@ public class EthereumConnector implements Connector{
 			return e.getMessage();
 		}
 	}
+
+	/*
+	 * For testing, uncomment these lines
+	 */
+//	public static void main(String [] args) {
+//		List<String> supplierNames = Arrays.asList("http://192.168.1.134:8000", "2140", "on");
+//		EthereumConnector ec = new EthereumConnector(supplierNames);
+//	}
 }

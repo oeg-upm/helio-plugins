@@ -15,6 +15,20 @@ To use this plugin in Helio, follow these steps:
 
 ### EthereumConnector example mapping
 
+The arguments of the plugin MUST be three:
+
+* Argument 1 -> URL (and port if is necessary)
+* Argument 2 -> Block/s
+    * *. Recover all the chain
+    * Number of the block. Recover a specific block.
+    * Block 1 - Block 2. Recover the blocks between 2 blocks.
+    * Block 1 - * . Recover from 1 block to the final of the chain.  
+* Decodification of transaction input On / Off (Hexadecimal to String).
+
+An example can be:
+
+["https://ropsten.infura.io/v3/****", "78533", "on"]
+
 #### Example 1. Retrieve 1 block.
 
 `````
@@ -25,7 +39,7 @@ To use this plugin in Helio, follow these steps:
         "type" : "JsonDatasource",
         "arguments" : ["$.[*]"],
         "connector"  : {
-         "arguments" : ["https://ropsten.infura.io/v3/****", "78533"],
+         "arguments" : ["https://ropsten.infura.io/v3/****", "78533", "off"],
          "type" : "EthereumConnector",
         }
       }
@@ -50,7 +64,7 @@ To use this plugin in Helio, follow these steps:
         "type" : "JsonDatasource",
         "arguments" : ["$.[*]"],
         "connector"  : {
-         "arguments" : ["https://ropsten.infura.io/v3/****", "78533-81267"],
+         "arguments" : ["https://ropsten.infura.io/v3/****", "78533-81267", "off"],
          "type" : "EthereumConnector",
         }
       }
@@ -75,7 +89,7 @@ To use this plugin in Helio, follow these steps:
         "type" : "JsonDatasource",
         "arguments" : ["$.[*]"],
         "connector"  : {
-         "arguments" : ["https://ropsten.infura.io/v3/****", "78533-*"],
+         "arguments" : ["https://ropsten.infura.io/v3/****", "78533-*", "off"],
          "type" : "EthereumConnector",
         }
       }
@@ -100,7 +114,7 @@ To use this plugin in Helio, follow these steps:
         "type" : "JsonDatasource",
         "arguments" : ["$.[*]"],
         "connector"  : {
-         "arguments" : ["https://ropsten.infura.io/v3/****", "*"],
+         "arguments" : ["https://ropsten.infura.io/v3/****", "*", "off"],
          "type" : "EthereumConnector",
         }
       }
@@ -128,7 +142,7 @@ A complete example of a mapping configuration is shown below:
         "arguments" : ["$.Blocks.[*]"],
         "refresh" : "2592000000",
         "connector"  : {
-         "arguments" : ["https://ropsten.infura.io/v3/[APIKEY]", "755"],
+         "arguments" : ["https://ropsten.infura.io/v3/[APIKEY]", "755", "off"],
          "type" : "EthereumConnector",
         }
       }
