@@ -51,7 +51,6 @@ public class EthereumInfoExtractor{
 			blockJson.addProperty("Sha3Uncles", block.getSha3Uncles());
 			blockJson.addProperty("StateRoot", block.getStateRoot());
 			blockJson.addProperty("TransactionsRoot", block.getTransactionsRoot());
-			blockJson.addProperty("Difficulty", block.getDifficulty());
 			blockJson.addProperty("Nonce", block.getNonce());
 			blockJson.addProperty("TotalDifficulty", block.getTotalDifficulty());
 			//Inside each block, can be 1 or more transactions.
