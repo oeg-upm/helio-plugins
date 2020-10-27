@@ -4,7 +4,7 @@ This repository contains the code and releases of the official plugins that can 
 
 | Plugin Type   | Plugin       | Description                                                                                                                                                 |
 |---------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Data Provider | BashProvider | This plugin allows to run a set of bash commands, and then, read a file with potential results; e.g., run a docker process and feed Helio with some results |
+| Data Provider | [BashProvider](https://github.com/oeg-upm/helio-plugins/tree/master/providers/bashprovider#helio-bash-provider-plugin) | This plugin allows to run a set of bash commands, and then, read a file with potential results; e.g., run a docker process and feed Helio with some results |
 |               |              |                                                                                                                                                             |
 
 
