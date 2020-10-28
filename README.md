@@ -84,6 +84,8 @@ Then, create the Pull Request:
 
 ![CreatePullRequest](https://i.imgur.com/KzI5OcA.png)
 
+Select your branch or the master (depending if you created a branch or not) 
+
 #### template 
 #### code
 #### Join fork
