@@ -50,6 +50,8 @@ git checkout readme-update
 git checkout readme-update
 `````
 
+##### Develop the plugin code
+
 You can add the new or modified files to your local repository with: 
 
 `````
