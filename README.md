@@ -5,7 +5,7 @@ This repository contains the code and releases of the official plugins that can 
 | Plugin Type   | Plugin       | Description                                                                                                                                                 |
 |---------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Data Provider | [BashProvider](https://github.com/oeg-upm/helio-plugins/tree/master/providers/bashprovider#helio-bash-provider-plugin) | This plugin allows to run a set of bash commands, and then, read a file with potential results; e.g., run a docker process and feed Helio with some results |
-| Data Provider | EthereumProvider | This plugin allows to recopile a block or a set of block of the [Ethereum Blockchain](https://ethereum.org/en/) with all the contaned data and meta-data. |
+| Data Provider | [EthereumProvider](https://github.com/oeg-upm/helio-plugins/tree/master/providers/ethereum-provider) | This plugin allows to collect a block or a set of blocks of an [Ethereum Blockchain](https://ethereum.org/en/). Those blocks contain all the original data and meta-data, the data of the block is expressed in JSON |
 |               |              |                                                                                                                                                             |
 
 ## Using a plugin
