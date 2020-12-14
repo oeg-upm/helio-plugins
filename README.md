@@ -16,6 +16,16 @@ This repository contains the code and releases of the official plugins that can 
 
 ## Developing a plugin
 
+Helio has been designed to be extensible through custom plugins that are dynamically loaded by either the Helio Materialiser [for users](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-Users) or [for developers](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-developers) and the [Helio Publisher](https://github.com/oeg-upm/helio/wiki/Helio-Publisher). Developing a new plugin does not require extending the core code of these software artefacts, instead, a plugin consists in an independent project that once compiled as jar is automatically identified and load by Helio.
+
+In order to develop a plugin, the following steps must be performed:
+1. Create a Fork of this repository
+2. Clone the code from the fork and create a new plugin project
+3. Develop the plugins code
+4. (Optional) Open a Pull Request to publish the plugin in the official Helio plugins repository 
+6. Upload a release to the official Helio plugins repository
+5. Use the plugin
+
 #### fork+PR
 
 ##### Creating a fork
@@ -92,3 +102,6 @@ Select your branch or the master (depending if you created a branch or not)
 #### code
 #### Join fork
 #### create release
+
+
+
