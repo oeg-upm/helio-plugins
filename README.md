@@ -22,12 +22,12 @@ Helio has been designed to be extensible through custom plugins that are dynamic
 In order to develop a plugin, the following steps must be performed:
 1. [Create a Fork of this repository](https://github.com/oeg-upm/helio-plugins/blob/master)
 2. [Clone the code from the fork and create a new plugin project](https://github.com/oeg-upm/helio-plugins/blob/master)
-3. Develop the plugins code
-4. (Optional) Open a Pull Request to publish the plugin in the official Helio plugins repository 
-6. Upload a release to the official Helio plugins repository
-5. Use the plugin
+3. [Develop the plugin code]()
+4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository]()
+5. [(Optional) Upload a release to the official Helio plugins repository]()
 
-In following subsections, all these steps are explained in detail.
+
+In following subsections, all these steps are explained in detail. Notice that **any plugin developed, published, and released in the official Helio plugins repository will have an Apache 2.0 license**.
 
 #### [1. Create a Fork of this repository]()
 
@@ -54,51 +54,98 @@ Before starting to develop any code, swap to the new brach using the command
 `````
 git checkout new-plugin
 `````
+Following, in this new branch create a new folder in one of the existing directories depending on the type of plugin that will be developed. For instance, if the new plugin is a [Data Provider](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-Users#data-providers) then the new folder should be created under the existing folder *providers*. This new folder should have a suitable name that describes the plugin, try to follow the rule *[name]-[plugin type]*. For instance, for an mqqt provider the new folder should be called *mqtt-provider*. **IT IS IMPORTANT THAT ANY MODIFICATION TO THE HELIO PLUGINS REPOSITORY OCCURS UNDER THE NEW PLUGIN FOLDER AND NOTHING ELSE IS MODIFIED OUTSIDE SUCH FOLDER**.
 
-And them, in this new branch copy the folder *./plugin-template* to the correct folder depending on the type of plugin that will be developed. For instance, if the new plugin is a [Data Provider](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-Users#data-providers) then the target folder should be *providers*. Then, rename the copied folder *plugin-template* with a suitable name that describe the plugin, try to follow the rule *[name]-[plugin type]*. For instance, for an mqqt provider the folder should be called *mqtt-provider*. Once this task is done, you are ready to import this folder in your IDE as a new Maven project. **IT IS IMPORTANT THAT THE ONLY MODIFICATIONS TO THE HELIO PLUGINS REPOSITORY OCCURS UNDER THE NEW PLUGIN FOLDER AND NOTHING ELSE IS MODIFIED OUTSIDE SUCH FOLDER**.
+#### 3.[Develop the plugin code]()
 
-##### Develop the plugin code
-
-You can add the new or modified files to your local repository with: 
-
-`````
-git add README.me
-`````
-
-You should add a message to reflect your contribution on the project. This could be done with a commit message:
+Once the folder for the new plugin is created, a new maven project must be created under that folder. After creating the new maven project, open the file *pom.xml* and add the following content.
 
 `````
-git commit -m "Update README"
+   <url>https://github.com/oeg-upm/helio-plugins</url>
+  
+   <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source> 
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>   
+  </properties>
+  
+  <dependencies>
+    <!-- Helio framework -->
+    <dependency>
+      <groupId>upm.oeg.helio</groupId>
+      <artifactId>framework</artifactId>
+      <version>X.X</version>
+    </dependency>
+    
+    <!-- Other dependencies go here below -->
+   
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+         </configuration>
+         <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+           </execution>
+          </executions>
+      </plugin> 
+    </plugins>
+  </build>
 `````
 
-This commit with the -m is for short messages. Then, you can verify the git commited with:
+Be aware that in the previous snippet the version of the Helio framework is marked as X.X, check and replace these tokens with the latest version of the [Helio Framework Maven dependency from the releases](https://github.com/oeg-upm/helio/releases). Then, download the latest version of this dependency from the releases and run the script *mvn-install.sh* to install this dependency in your local maven environment. 
+
+Now your local environment and IDE are ready to start developing the plugin's code. For this end create a new java class for the plugin and extend any of the interfaces that Helio supports as pluggable. These interfaces and the goal of the code that implements them are the following: 
+
+* *DataProvider* this kind of components retrieve and fetch data from a new data source, regarless the format of such data. For instance, a new provider could retrie the data from an MQTT broker regardless if the format of such data is json, xml, csv, or any other.
+* *DataHandler* this kind of components are used to filter and handle the data relying on their format. For instance, a new handler could select some values from an XML file using Json Path expressions, or even iterate over a list in XML using these Json Path expressions.
+* *HelioCache* this kind of components are used to store the RDF generated by Helio. For instance, a new cache could store in Git Hub the RDF been generated by Helio providing versioning capabilities to the RDF been produced by Helio in time.
+* *Functions* this kind of components are used to extend the functions that can be called from the mappings in Helio.
+* *MappingTranslator* this kind of components are used to extend the mapping languages that Helio understands.
+
+Once specified the interface to be implemented the IDE will require a set of methods to be implemented (to know more about these methods and their socope check the [Helio Java Docs](https://oeg-upm.github.io/helio-framework/), otherwise, the plugins in this repository can be taken as an example). As a result, these methods will implement the functionalities of the new plugin.
+
+Finally, **it is required to create a file README.md documenting the plugin**, especially, indicating the structure of the expected json document to setup the new plugin. Once all the code is developed, register the new changes in the git branch of the new plugin. For this end, follow this excerpt of commands.
+
 
 `````
-git status
+git checkout -b new-branch // to create and swapt to the new branch if this was not done before, replace new-branch for the name of your branch
+git add .
+git commit -am "write here a meaningful message"
+git push origin new-branch //  replace new-branch for the name of your branch
 `````
 
-Finally, you can use git push to push the change to the current branch of your forked repository:
-
-`````
-git push --set-upstream origin readme-update
-`````
-
-##### Open a Pull Request
-
-To do a Pull Request, you must click in the Pull Request button and create a new Pull Request
-
-![PullRequest](https://i.imgur.com/tygTzQj.png)
-
-Then, create the Pull Request:
-
-![CreatePullRequest](https://i.imgur.com/KzI5OcA.png)
-
-Select your branch or the master (depending if you created a branch or not) 
-
-#### template 
-#### code
-#### Join fork
-#### create release
+After pushing the changes to Git Hub, the last step to publish the plugin's code in the official Helio repository is opening a Pull Request
 
 
+#### 4.[Open a Pull Request to publish the plugin's code in the official Helio plugins repository]()
+
+To request a Pull Request there are several options. The easiest is to open in a browser the forked repository and click the button *Compare & Pull Request* that will appear, as shown in the following capture in red.
+
+![Opening a Pull Request](https://i.imgur.com/1U2Z2pQ.png)
+
+After clicking the *Compare & Pull Request* the plugin's branch from the forked repository will appear compared against the master from the original (or the master branch from the forked repository against the master of the original if no additional branch was created). In the image below the red square indicates the  master from the original repository, and the red square the brach of the forked repository. Add an meaninful message for the Pull Request and submit the request.
+
+![Requesting a Pull Request](https://i.imgur.com/8TBDGJR.png)
+
+If the whole process was correctly carried out, as depicted in the figure below, in the tab section *Pull requests* (marked in blue in the figure) of the Helio plugins repository must appear the new created Pull Request (marked in red in the figure). 
+
+![Checking if Pull Request was correctly created](https://i.imgur.com/6RMGOms.png)
+
+#### 5.[Upload a release to the official Helio plugins repository]()
 
