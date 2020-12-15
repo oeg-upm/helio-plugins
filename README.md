@@ -26,6 +26,7 @@ In order to develop a plugin, the following steps must be performed:
 4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins#4-open-a-pull-request-to-publish-the-plugins-code-in-the-official-helio-plugins-repository)
 5. [(Optional) Upload a release to the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins#5-upload-a-release-to-the-official-helio-plugins-repository)
 
+
 In following subsections, all these steps are explained in detail. Notice that **any plugin developed, published, and released in the official Helio plugins repository will have an Apache 2.0 license**.
 
 ##### [1. Create a Fork of this repository]()
@@ -146,42 +147,6 @@ If the whole process was correctly carried out, as depicted in the figure below,
 
 ![Checking if Pull Request was correctly created](https://i.imgur.com/6RMGOms.png)
 
-##### [5. Upload a release to the official Helio plugins repository]()
+##### [5. Upload a release to a repository]()
 
-In order to publish a release of the plugin in the official Helio repository two elements must be provided. The former is the jar of the plugin, which has to be generated using maven relying on the following command
-````
-mvn clean package
-````
-This command will generate a target folder containing 2 jars (as depicted in the following figure). The one that must be choosen and renamed with a suitable name is the one that has the extension *...-jar-with-dependencies.jar* (marked in red in the figure).
-
-![Compiled jars](https://i.imgur.com/8xRrL7y.png)
-
-The latter element is a Json configuaration file that will allow Helio invoking the plugin from the Git Hub release. Notice that although this is not mandatory to use the plugin, it is requested to publish the plugin release. The Json configuration file must have the following keys:
-
- * *"type"* the value of this key must be the interface that the plugin implements, e.g., DataProvider
- * *"class"* the value of this key must be the whole path to the java class that implements the plugin, e.g., upm.oeg.helio.plugins.provider.MqttProvider
- * *"source"* the value of this key must be a URL where the plugin is available, here the URL should be the one of the release. In order to complete this field a first release of the jar must be done, and then, update the configuration file with the correct URL of the release
-
-An example of this configuration file is the following, note that the specified keys belong to a json inside an array. If one jar contains more than one plugin the array should contain a Json configuration file for each plugin within the jar
-
-`````
-{
-	"plugins" : [
-		{ "type" : "DataProvider", "class":"upm.oeg.helio.plugins.provider.MqttProvider", "source" : "https://github.com/oeg-upm/helio-plugins/releases/download/%230.1.5/bashprovider-0.1.5.jar"}
-	]
-}
-`````
-In order to make the first release, go to the forked repository and create a new drafted release with the jar and the config file. The following figure shows in red a sample forked repository, and the release section that must be clicked. 
-
-![Start drafting release](https://i.imgur.com/lz2f0is.png)
-
-The following caption depicts the window that will appear after clicking in the release buttom. Notice in the caption that a correct verion, a name for the plugin, and a meaningful description must be provided. Then, click on the buttom *Save draft* (squared in red in the figure).
-
-![Creating draft release](https://i.imgur.com/lZXaiH6.png)
-
-After saving the release as draft, let's add the URL of the plugin so the config file points to that URL. 
-
-
-
-
-
+In order to publish a release of the plugin in the official Helio repository the code of the plugin must be pushed with a Pull Request as previously explained. After that, the managers of the Helio plugins repository will check the code, compile it, and publish the release. 
