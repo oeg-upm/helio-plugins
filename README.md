@@ -22,14 +22,14 @@ Helio has been designed to be extensible through custom plugins that are dynamic
 In order to develop a plugin, the following steps must be performed:
 1. [Create a Fork of this repository](https://github.com/oeg-upm/helio-plugins/blob/master)
 2. [Clone the code from the fork and create a new plugin project](https://github.com/oeg-upm/helio-plugins/blob/master)
-3. [Develop the plugin code]()
-4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository]()
+3. [Develop the plugin code](https://github.com/oeg-upm/helio-plugins/blob/master)
+4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins/blob/master)
 5. [(Optional) Upload a release to the official Helio plugins repository]()
 
 
 In following subsections, all these steps are explained in detail. Notice that **any plugin developed, published, and released in the official Helio plugins repository will have an Apache 2.0 license**.
 
-#### [1. Create a Fork of this repository]()
+##### [1. Create a Fork of this repository]()
 
 A fork is a copy of the parent repository, which however, remains synchronised with the former repository. When new modifications are commited to the forked repository these are marked as changes from the original repository, and thus, can be later be pushed to the original repository requesting a Pull Request. The bottom line idea is to fork the Helio plugins repository, include the new code in the fork, and then create a Pull Request to merge the new plugin code in the original repository. To fork the Helio plugins repository click in the "Fork" button on the upper right-corner of the repository page.
 
@@ -37,7 +37,7 @@ A fork is a copy of the parent repository, which however, remains synchronised w
 
 Once forked the a copy of the Helio plugins repository must appear in the private account of the user who forked the repotiroty.
 
-#### [2. Clone the code from the fork and create a new plugin project]()
+##### [2. Clone the code from the fork and create a new plugin project]()
 
 Once the project is forked the code must be cloned, for this end, the following command can be used. Bear in mind that */username* should be replaced with a valid username.
 
@@ -56,7 +56,7 @@ git checkout new-plugin
 `````
 Following, in this new branch create a new folder in one of the existing directories depending on the type of plugin that will be developed. For instance, if the new plugin is a [Data Provider](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-Users#data-providers) then the new folder should be created under the existing folder *providers*. This new folder should have a suitable name that describes the plugin, try to follow the rule *[name]-[plugin type]*. For instance, for an mqqt provider the new folder should be called *mqtt-provider*. **IT IS IMPORTANT THAT ANY MODIFICATION TO THE HELIO PLUGINS REPOSITORY OCCURS UNDER THE NEW PLUGIN FOLDER AND NOTHING ELSE IS MODIFIED OUTSIDE SUCH FOLDER**.
 
-#### 3.[Develop the plugin code]()
+##### [3. Develop the plugin code]()
 
 Once the folder for the new plugin is created, a new maven project must be created under that folder. After creating the new maven project, open the file *pom.xml* and add the following content.
 
@@ -133,7 +133,7 @@ git push origin new-branch //  replace new-branch for the name of your branch
 After pushing the changes to Git Hub, the last step to publish the plugin's code in the official Helio repository is opening a Pull Request
 
 
-#### 4.[Open a Pull Request to publish the plugin's code in the official Helio plugins repository]()
+##### [4. Open a Pull Request to publish the plugin's code in the official Helio plugins repository]()
 
 To request a Pull Request there are several options. The easiest is to open in a browser the forked repository and click the button *Compare & Pull Request* that will appear, as shown in the following capture in red.
 
@@ -147,5 +147,5 @@ If the whole process was correctly carried out, as depicted in the figure below,
 
 ![Checking if Pull Request was correctly created](https://i.imgur.com/6RMGOms.png)
 
-#### 5.[Upload a release to the official Helio plugins repository]()
+##### [5. Upload a release to the official Helio plugins repository]()
 
