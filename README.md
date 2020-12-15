@@ -149,4 +149,4 @@ If the whole process was correctly carried out, as depicted in the figure below,
 
 ##### [5. Upload a release to a repository]()
 
-In order to publish a release of the plugin in the official Helio repository the code of the plugin must be pushed with a Pull Request as previously explained. After that, the managers of the Helio plugins repository will check the code, compile it, and publish the release. 
+In order to publish a release of the plugin in the official Helio repository the code of the plugin must be pushed with a Pull Request as previously explained. After that, the managers of the Helio plugins repository will check the code, compile it, and publish the release. Additionally, they will update the current README including the plugin in the table of the available ones, for which end a good documentation of the plugin is required. 
