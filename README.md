@@ -20,12 +20,11 @@ This repository contains the code and releases of the official plugins that can 
 Helio has been designed to be extensible through custom plugins that are dynamically loaded by either the Helio Materialiser [for users](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-Users) or [for developers](https://github.com/oeg-upm/helio/wiki/Helio-Materialiser-for-developers) and the [Helio Publisher](https://github.com/oeg-upm/helio/wiki/Helio-Publisher). Developing a new plugin does not require extending the core code of these software artefacts, instead, a plugin consists in an independent project that once compiled as jar is automatically identified and loaded by Helio.
 
 In order to develop a plugin, the following steps must be performed:
-1. [Create a Fork of this repository](https://github.com/oeg-upm/helio-plugins/blob/master)
-2. [Clone the code from the fork and create a new plugin project](https://github.com/oeg-upm/helio-plugins/blob/master)
-3. [Develop the plugin code](https://github.com/oeg-upm/helio-plugins/blob/master)
-4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins/blob/master)
-5. [(Optional) Upload a release to the official Helio plugins repository]()
-
+1. [Create a Fork of this repository](https://github.com/oeg-upm/helio-plugins#1-create-a-fork-of-this-repository)
+2. [Clone the code from the fork and create a new plugin project](https://github.com/oeg-upm/helio-plugins#2-clone-the-code-from-the-fork-and-create-a-new-plugin-project)
+3. [Develop the plugin code](https://github.com/oeg-upm/helio-plugins#3-develop-the-plugin-code)
+4. [(Optional) Open a Pull Request to publish the plugin's code in the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins#4-open-a-pull-request-to-publish-the-plugins-code-in-the-official-helio-plugins-repository)
+5. [(Optional) Upload a release to the official Helio plugins repository](https://github.com/oeg-upm/helio-plugins#5-upload-a-release-to-the-official-helio-plugins-repository)
 
 In following subsections, all these steps are explained in detail. Notice that **any plugin developed, published, and released in the official Helio plugins repository will have an Apache 2.0 license**.
 
@@ -148,4 +147,7 @@ If the whole process was correctly carried out, as depicted in the figure below,
 ![Checking if Pull Request was correctly created](https://i.imgur.com/6RMGOms.png)
 
 ##### [5. Upload a release to the official Helio plugins repository]()
+
+
+
 
